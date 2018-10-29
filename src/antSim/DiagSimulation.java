@@ -7,9 +7,13 @@ import java.util.List;
 public class DiagSimulation extends GameSimulation
 {
 
-	DiagSimulation(Ant ant1, Ant ant2)
+	DiagSimulation(Board board , Ant ant1, Ant ant2)
 	{
-		super(ant1, ant2);
+		super(board, ant1, ant2);
+	}
+	DiagSimulation()
+	{
+		super();
 	}
 	
 	List<Point> findAvailableMoves(Ant ant, Boolean backAllowed) 
@@ -20,9 +24,10 @@ public class DiagSimulation extends GameSimulation
 		{
 			for(int y = -1; y < 2; y++)
 			{
-				if(y+ant.getY() >= 0 && y+ant.getY() < 8 && x + ant.getX() >= 0 && x + ant.getX() < 8 && !(x == 0 && y ==0))
+				if(y+ant.getY() >= 0 && y+ant.getY() < ant.getBoard().getSideLength() && x + ant.getX() >= 0 
+						&& x + ant.getX() < ant.getBoard().getSideLength() && !(x == 0 && y ==0))
 				{
-					if(!(ant.getX() == ant.lastPoint.x && ant.getY() + y == ant.lastPoint.y && !backAllowed))
+					if(!(ant.getX() + x == ant.getLastPoint().x && ant.getY() + y == ant.getLastPoint().y && !backAllowed))
 					{
 						availableMoves.add(new Point(ant.getX() + x, ant.getY() + y));
 					}

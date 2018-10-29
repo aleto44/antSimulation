@@ -8,15 +8,13 @@ public class Ant
 {
 	private int x;
 	private int y;
+	private Board board;
+	private Point lastPoint;
 	
-	Point lastPoint = new Point(-1, -1);
-	
-	Ant(){}
-	
-	Ant(int x, int y)
+	Ant(Board board)
 	{
-		this.x = x;
-		this.y = y;
+		this.board = board;
+		lastPoint = new Point(-1, -1);
 	}
 	
 	public void randomMove(List<Point> availableMoves)
@@ -28,15 +26,10 @@ public class Ant
 		Point nextMoveCoordinate = availableMoves.get(randomIndex);
 		setXY(nextMoveCoordinate.x, nextMoveCoordinate.y);
 	}
-	public Point getLowerRectPathPoint()
+	
+	public Point getLastPoint()
 	{
-		Point lowerPoint = new Point((int)Math.min(this.getX(), this.lastPoint.getX()), (int)Math.min(this.getY(), this.lastPoint.getY()));
-		return lowerPoint;
-	}
-	public Point getUpperRectPathPoint()
-	{
-		Point upperPoint = new Point((int)Math.max(this.getX(), this.lastPoint.getX()), (int)Math.max(this.getY(), this.lastPoint.getY()));
-		return upperPoint;
+		return lastPoint;
 	}
 	
 	public int getX()
@@ -54,13 +47,22 @@ public class Ant
 	}
 	public void setCoordinatesUpperRight()
 	{
-		this.x = this.y = 7;
+		this.x = this.y = this.board.getSideLength() - 1;
+	}
+	public void setLastPoint(int x, int y)
+	{
+		this.lastPoint = new Point(x, y);
 	}
 	
-	private void setXY(int x, int y)
+	public Board getBoard()
 	{
-		this.x = x;
-		this.y = y;
+		return this.board;
+	}
+	
+	protected void setXY(int x, int y)
+	{
+		if(x >= 0 && x < board.getSideLength()) this.x = x;
+		if(y >= 0 && y < board.getSideLength()) this.y = y;
 	}
 	
 

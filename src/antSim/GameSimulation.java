@@ -6,13 +6,22 @@ import java.util.List;
 public abstract class GameSimulation 
 {
 
-	Ant ant1;
-	Ant ant2;
+	private Board board;
+	private Ant ant1;
+	private Ant ant2;
 	
-	GameSimulation(Ant ant1, Ant ant2)
+	GameSimulation(Board board, Ant ant1, Ant ant2)
 	{
+		this.board = board;
 		this.ant1 = ant1;
 		this.ant2 = ant2;
+	}
+	
+	GameSimulation()
+	{
+		this.board = new Board();
+		this.ant1 = new Ant(this.board);
+		this.ant2 = new Ant(this.board);
 	}
 	
 	public void bothMove(Boolean backwardAllowed)
@@ -25,10 +34,23 @@ public abstract class GameSimulation
 	{
 		return ant1.getX() == ant2.getX() && ant1.getY() == ant2.getY();
 	}
-	//treats the last tile and current tile of ants movement as a rectangle, sees if two ants share a rectangle.
+
 	public boolean checkCrossing()
 	{
-		return ant1.getLowerRectPathPoint().equals(ant2.getLowerRectPathPoint()) && ant1.getUpperRectPathPoint().equals(ant2.getUpperRectPathPoint());
+		return (ant1.getX() == ant2.getLastPoint().x) && (ant1.getY() == ant2.getLastPoint().y) && (ant1.getLastPoint().x == ant2.getX()) && (ant1.getLastPoint().y == ant2.getY());
+	}
+	
+	public void resetSimulation()
+	{
+		ant1.setCoordinatesLowerLeft();
+		ant2.setCoordinatesUpperRight();
+		ant1.setLastPoint(-1,-1);
+		ant2.setLastPoint(-1,-1);
+	}
+	
+	public Board getBoard()
+	{
+		return this.board;
 	}
 	
 	abstract List<Point> findAvailableMoves(Ant ant, Boolean backwardsAllowed);
