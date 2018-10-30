@@ -1,9 +1,10 @@
 package antSim;
 
-public class main {
+public class Main {
 
 	public static void main(String[] args) {
-
+		
+		//using default constructors 
 		SimulationCenter hub = new SimulationCenter();
 		GameSimulation noDiag = new NoDiagSimulation();
 		GameSimulation diag = new DiagSimulation();
@@ -11,7 +12,6 @@ public class main {
 		//adjust settings
 		int runTimes = 10000;
 		boolean backwardsAllowed = true;
-		
 		
 		System.out.println("Avg moves for two ants to collide in " + runTimes + " trials");
 		
